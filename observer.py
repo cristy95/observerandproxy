@@ -2,7 +2,7 @@ import time
 from abc import ABCMeta, abstractmethod
 import datetime
 
-
+myfile = open('MyFile', 'w')
 class Subject(object):
     def __init__(self):
         self.observers = []
@@ -26,6 +26,7 @@ class Subject(object):
             observer.notify(self.cur_time)
 
 
+
 class Observer(object):
     """Abstract class for observers, provides notify method as
     interface for subjects."""
@@ -40,35 +41,37 @@ class USATimeObserver(Observer):
         self.name = name
     
     def notify(self, unix_timestamp):
-    	time = datetime.datetime.fromtimestamp(int(unix_timestamp)).strftime('%Y-%m-%d %I:%M:%S%p')
-        print 'Observer', self.name, 'says:', time
+    	time = datetime.datetime.fromtimestamp(int(unix_timestamp)).strftime('%Y-%m-%d %I:%M%p')
+        myfile.write(str('Observer ' + self.name + ' says: ' + time + '\n'))
+        #print 'Observer', self.name, 'says:', time
 
 class EUTimeObserver(Observer):
     def __init__(self, name):
         self.name = name
     
     def notify(self, unix_timestamp):
-        time = datetime.datetime.fromtimestamp(int(unix_timestamp)).strftime('%Y-%m-%d %H:%M:%S')
-        print 'Observer', self.name, 'says:', time
+        time = datetime.datetime.fromtimestamp(int(unix_timestamp)).strftime('%Y-%m-%d %H:%M')
+        myfile.write(str('Observer ' + self.name + ' says: ' + time + '\n'))
+        #print 'Observer ', self.name, ' says:', time
 
 
 if __name__ == '__main__':
     subject = Subject()
     
-    print 'Adding usa_time_observer'
+    #print 'Adding usa_time_observer'
     observer1 = USATimeObserver('usa_time_observer')
     subject.register_observer(observer1)
     
     subject.notify_observers()
     time.sleep(2)
     
-    print 'Adding eu_time_observer'
+    #print 'Adding eu_time_observer'
     observer2 = EUTimeObserver('eu_time_observer')
     subject.register_observer(observer2)
     
     subject.notify_observers()
     time.sleep(2)
     
-    print 'Removing usa_time_observer'
+    #print 'Removing usa_time_observer'
     subject.unregister_observer(observer1)
     subject.notify_observers()
