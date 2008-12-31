@@ -29,6 +29,8 @@ class Proxy(AbstractSubject):
     """A proxy which has the same interface as RealSubject."""
     reference_count = 0
 
+    pfile = open('ProxyFile', 'w')
+
     def __init__(self):
         """A constructor which creates an object if it is not exist and
         caches it otherwise."""
@@ -39,6 +41,7 @@ class Proxy(AbstractSubject):
             print 'Using cached object'
  
         self.__class__.reference_count += 1
+        self.__class__.pfile.write(str('Count of references = %d\n' %self.__class__.reference_count))
         print 'Count of references = ', self.__class__.reference_count
 
     def sort(self, reverse=False):
@@ -55,7 +58,9 @@ class Proxy(AbstractSubject):
         if self.__class__.reference_count == 0:
             print 'Number of reference_count is 0. Deleting cached object...'
             del self.__class__.cached_object
-        
+            self.__class__.pfile.write('Count of references = 0\n')
+
+        self.__class__.pfile.write('Count of objects = %d\n' %self.__class__.reference_count)
         print 'Deleted object. Count of objects = ', self.__class__.reference_count
 
 
