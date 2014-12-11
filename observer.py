@@ -22,8 +22,8 @@ class Subject(object):
 
     def notify_observers(self):
         self.cur_time = time.time()
-            for observer in self.observers:
-                observer.notify(self.cur_time)
+        for observer in self.observers:
+            observer.notify(self.cur_time)
 
 
 class Observer(object):
@@ -37,7 +37,7 @@ class Observer(object):
 
 class USATimeObserver(Observer):
     def __init__(self, name):
-    self.name = name
+        self.name = name
     
     def notify(self, unix_timestamp):
     	time = datetime.datetime.fromtimestamp(int(unix_timestamp)).strftime('%Y-%m-%d %I:%M:%S%p')
