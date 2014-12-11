@@ -16,8 +16,8 @@ class RealSubject(AbstractSubject):
     
     def __init__(self):
         self.digits = []
-            for i in xrange(10000000):
-                self.digits.append(random.random())
+        for i in xrange(10000000):
+            self.digits.append(random.random())
 
     def sort(self, reverse=False):
         self.digits.sort()
