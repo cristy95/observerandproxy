@@ -36,18 +36,18 @@ class Proxy(AbstractSubject):
         caches it otherwise."""
         if not getattr(self.__class__, 'cached_object', None):
             self.__class__.cached_object = RealSubject()
-            print 'Created new object'
-        else:
-            print 'Using cached object'
- 
+            #print 'Created new object'
+        #else:
+            #print 'Using cached object'
+
         self.__class__.reference_count += 1
         self.__class__.pfile.write(str('Count of references = %d\n' %self.__class__.reference_count))
-        print 'Count of references = ', self.__class__.reference_count
+        #print 'Count of references = ', self.__class__.reference_count
 
     def sort(self, reverse=False):
         """The args are logged by the Proxy."""
-        print 'Called sort method with args:'
-        print locals().items()
+        #print 'Called sort method with args:'
+        #print locals().items()
         self.__class__.cached_object.sort(reverse=reverse)
 
     def __del__(self):
@@ -56,29 +56,29 @@ class Proxy(AbstractSubject):
         self.__class__.reference_count -= 1
         
         if self.__class__.reference_count == 0:
-            print 'Number of reference_count is 0. Deleting cached object...'
+            #print 'Number of reference_count is 0. Deleting cached object...'
             del self.__class__.cached_object
             self.__class__.pfile.write('Count of references = 0\n')
 
         self.__class__.pfile.write('Count of objects = %d\n' %self.__class__.reference_count)
-        print 'Deleted object. Count of objects = ', self.__class__.reference_count
+        #print 'Deleted object. Count of objects = ', self.__class__.reference_count
 
 
 if __name__ == '__main__':
     proxy1 = Proxy()
-    print
+    #print
 
     proxy2 = Proxy()
-    print
+    #print
 
     proxy3 = Proxy()
-    print
+    #print
 
     proxy1.sort(reverse=True)
-    print
+    #print
     
-    print 'Deleting proxy2'
+    #print 'Deleting proxy2'
     del proxy2
-    print
+    #print
 
-    print 'The other objects are deleted upon program termination'
+    #print 'The other objects are deleted upon program termination'
